@@ -1,0 +1,43 @@
+inside gitlab-docker 
+cd gitlab-docker
+
+mkdir -p /nginx
+
+cd nginx
+
+nano Nginxfile 
+Paste the following (replace with your domain):
+
+caddy
+Copy
+Edit
+gitlab.example.com {
+  reverse_proxy gitlab:80
+}
+
+Save it 
+
+you have to create dockerfile also for nginx but the best practice is to have both gitlab and nginx on the same docker network 
+
+docker run -d \
+  --name nginx \
+  --restart unless-stopped \
+  --network gitlab-network \
+  -p 80:80 -p 443:443 \
+  -v $PWD/Nginxfile:/etc/nginx/Nginxfile \
+  -v nginx_data:/data \
+  -v nginx_config:/config \
+  nginx:latest
+  
+  
+  
+  
+but if you have nginx running and gitlab on the same network 
+
+
+you can access your gitlab
+
+https://gitlab.example.com 
+
+
+if you encounter any problem chatgpt is your best friend!!! 
