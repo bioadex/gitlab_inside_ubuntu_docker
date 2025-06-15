@@ -1,0 +1,63 @@
+How to create gitlab inside ubuntu server using docker 
+
+firstly you must have docker running on your ubuntu server  and also nginx install  
+
+start by sudo su 
+
+enter as root 
+
+create a folder name gitlab-docker 
+
+mkdir gitlab-docker 
+
+cd gitlab-docker 
+
+inside the directory install docker 
+
+sudo apt install docker 
+
+docker --version 
+
+docker info 
+
+create dockerfile 
+
+docker-compose.yml 
+
+start 
+
+docker-compose up -d 
+
+
+remove 
+
+docker-compose down 
+
+wait till you see "healthy"
+
+you can check this by using 
+
+docker ps -a 
+
+After the gitlab is running you need to edit the GITLAB configuration 
+
+sudo nano /etc/gitlab/gitlab.rb 
+
+Modify this line 
+
+external_url 'http://gitlab.example.com'   # HTTP only
+nginx['listen_https'] = false
+nginx['redirect_http_to_https'] = false
+
+Save it 
+
+then restart 
+
+docker exec -it gitlab gitlab-ctl reconfigure
+
+you can access gitlab 
+
+http://gitlab.example.com 
+
+
+
